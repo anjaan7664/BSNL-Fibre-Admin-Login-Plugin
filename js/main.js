@@ -1,16 +1,39 @@
-document.getElementById("username1").value = 'admin';
-document.getElementById("psd1").value = 'Anjaan';
-document.getElementById("verification_code").value = document.getElementById("check_code").value;
+window.onload = () => {
+    document.getElementById('passSaveButton').
+    addEventListener('click', function () {
+        const pass = document.getElementById('usern').value;
+        chrome.storage.local.set({
+                'savedPass': pass
+            }, function () {
+                console.log('Value is set to ' + pass);
+                chrome.tabs.getSelected(null, function (tab) {
+                    chrome.tabs.reload(tab.id);
+                });
+            }
 
+        );
+    });
+    const checkBox = document.getElementById('usePassCheckbox');
+    checkBox.addEventListener('click', () => setThisPassword(checkBox.checked));
+    chrome.storage.local.get(["savedPass"], function (items) {
+        document.getElementById('usern').value = items.savedPass;
+    });
 
+    chrome.storage.local.get(["setPassCheckBox"], function (items) {
+        checkBox.checked = items.setPassCheckBox;
 
-// let val = document.getElementById("username1");
-// val.addEventListener('input', function (evt) {
-//     document.getElementById("psd1").value = this.value;
-// })
-// console.log(chrome.storage.local.get("ftth_password"));
+    });
 
-// console.log(chrome.storage.local.get(["ftth_password"]));
-    // setTimeout(function () {
-    //     document.getElementsByTagName('login')[0].submit();
-    // }, 2000);
+}
+
+function setThisPassword(val) {
+
+    chrome.storage.local.set({
+        'setPassCheckBox': val
+    }, () => {
+        console.log('CheckBox Value is set to ' + val);
+        chrome.tabs.getSelected(null, function (tab) {
+            chrome.tabs.reload(tab.id);
+        });
+    })
+}
