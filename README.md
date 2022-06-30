@@ -1,6 +1,6 @@
 # BSNL-Fibre-Admin-Login-Plugin
 
-Automatically login to BSNL FTTH Admin
+Automatically login to BSNL FTTH Admin.
 Every time you login to BSNL FTTH admin page in your Syrotech router ip, you have to type username as 'admin', captcha code and have to put password everytime.
 So I have made it simpler to do this.
 
